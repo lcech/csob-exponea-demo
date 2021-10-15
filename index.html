@@ -6,10 +6,25 @@
     <style>.xnpe_async_hide{opacity:0 !important}</style>
     <script type="text/javascript">
       var digitalData = digitalData || {};
+
       function unhideBody() {
         document.documentElement.classList.remove('xnpe_async_hide');
       }
+
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+            // Registration was successful
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }, function(err) {
+            // registration failed :(
+            console.log('ServiceWorker registration failed: ', err);
+          });
+        });
+      }
+
       document.documentElement.classList.add('xnpe_async_hide');
+
       !function(a, k, t, i, v, u, j, e, m) {
         // Async queue initialization
         a[i] = a[i] || function() {
@@ -22,6 +37,7 @@
         e.src = 'https://assets.adobedtm.com/0e0efd248c1a/6bd083f36e96/launch-7b63ca3b51e0-development.min.js',
         m.parentNode.insertBefore(e, m);
       } (window, document, 'script', 'measure');
+
       window.setTimeout(unhideBody, 4e3);
     </script>
   </head>
